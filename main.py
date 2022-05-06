@@ -1,25 +1,33 @@
 import sys
 import pygame;
 from pygame.locals import *
-from lib.ball import Ball
+from lib.sphere import Sphere
+from lib.scales import Scales
+from lib.physics import Physics
 
 pygame.init()
 
-fps = 60
-
-sprites = pygame.sprite.Group()
-
-class System(pygame.sprite.Sprite):
+class System():
     
     def __init__(self):
         
         super().__init__()
         
-        self.window = pygame.display.set_mode((600, 600))
+        self.fps = 60
+        self.framerate = 0
+        self.sprites = pygame.sprite.Group()
+
+
+        self.width = 600
+        self.height = 600
+
+        self.window = pygame.display.set_mode((self.width, self.height))
         self.clock = pygame.time.Clock()
 
         self.run = False
-        self.g = 9,81
+
+        self.scales = Scales()
+        self.physics = Physics()
 
     def main(self):
         
@@ -27,8 +35,20 @@ class System(pygame.sprite.Sprite):
     
     def update(self):
 
-        pass
+        self.framerate = int(self.clock.get_fps())
+        pygame.display.set_caption(str(self.framerate))
 
+        if(self.framerate < self.fps-30):
+            self.clear_sprites()
+    
+    def clear_sprites(self):
+    
+        for object in self.sprites:
+                del object
+
+        self.sprites.empty()
+
+            
 
 if (__name__ == "__main__"):
 
@@ -41,21 +61,36 @@ while(system.run == True):
 
     pygame.display.update()
 
-    system.clock.tick(fps)
-
+    system.clock.tick(system.fps)
     system.update()
 
     system.window.fill((255, 255, 255))
 
-    sprites.draw(system.window)
+    system.sprites.draw(system.window)
+    system.sprites.update()
+
+    system.physics.gravity(system.sprites)
 
     for event in pygame.event.get():
         
         if(event.type == pygame.MOUSEBUTTONDOWN):
 
-            ball = Ball(10, 10, 50, 50)
-            sprites.add(ball)
+            mouse_x = pygame.mouse.get_pos()[0]
+            mouse_y = pygame.mouse.get_pos()[1]
 
-        if(event.type == pygame.QUIT):
+            scale = system.scales.scale_sphere
+            
+            sphere = Sphere(system, mouse_x - scale/2, mouse_y - scale/2, scale, scale)
+            
+            system.sprites.add(sphere)
+
+        elif(event.type == pygame.KEYDOWN):
+            
+            if(event.key == pygame.K_c):
+
+                system.clear_sprites()
+
+        elif(event.type == pygame.QUIT):
             
             sys.exit()
+

@@ -15,6 +15,7 @@ class System():
         
         self.fps = 60
         self.framerate = 0
+        self.dt = 0
         self.sprites = pygame.sprite.Group()
 
 
@@ -61,7 +62,7 @@ while(system.run == True):
 
     pygame.display.update()
 
-    system.clock.tick(system.fps)
+    system.dt = system.clock.tick(system.fps)/1000
     system.update()
 
     system.window.fill((255, 255, 255))

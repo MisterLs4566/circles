@@ -18,7 +18,6 @@ class System():
         self.dt = 0
         self.sprites = pygame.sprite.Group()
 
-
         self.width = 600
         self.height = 600
 
@@ -62,7 +61,7 @@ while(system.run == True):
 
     pygame.display.update()
 
-    system.dt = system.clock.tick(system.fps)/1000
+    system.dt = system.clock.tick(system.fps)
     system.update()
 
     system.window.fill((255, 255, 255))

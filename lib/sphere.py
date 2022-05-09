@@ -20,6 +20,9 @@ class Sphere(pygame.sprite.Sprite):
         self.scale_x = scale_x
         self.scale_y = scale_y
 
+        self.momentum_x = 0
+        self.momentum_y = 0
+
         self.image = pygame.image.load("./sprites/ball.png")
         self.image = pygame.transform.scale(self.image, (scale_x, scale_y))
         self.rect = self.image.get_rect()
@@ -31,6 +34,9 @@ class Sphere(pygame.sprite.Sprite):
         
         self.timer += float(1000/self.system.fps)
         self.seconds = float(self.timer/1000)
+
+        self.rect.y += self.momentum_y * self.system.dt
+        self.rect.x += self.momentum_x * self.system.dt
 
         self.clear()
 
@@ -44,6 +50,29 @@ class Sphere(pygame.sprite.Sprite):
 
         self.system.sprites.remove(self)
         del self
+
+    def check_ground(self):
+
+        for object in self.system.sprites:
+            
+            if(object != self):
+                
+                if(self.rect.colliderect(object.rect)):
+                
+                    if(object.rect.y <= self.rect.y + self.scale_y):
+                            
+                                self.momentum_y = 0
+
+                                return "object"
+
+        if(self.system.height - (self.rect.y + self.scale_y) < self.scale_y):
+            
+            
+            self.momentum_y = 0
+            
+            return "ground"
+        
+        return "empty"
 
 if(__name__ == "__main__"):
     

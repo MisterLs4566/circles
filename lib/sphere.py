@@ -23,6 +23,8 @@ class Sphere(pygame.sprite.Sprite):
         self.momentum_x = 0
         self.momentum_y = 0
 
+        self.grounded = False
+
         self.image = pygame.image.load("./sprites/ball.png")
         self.image = pygame.transform.scale(self.image, (scale_x, scale_y))
         self.rect = self.image.get_rect()
@@ -61,15 +63,19 @@ class Sphere(pygame.sprite.Sprite):
                 
                     if(object.rect.y <= self.rect.y + self.scale_y):
                             
-                                self.momentum_y = 0
+                            if(object.grounded == True):
+                                
+                                self.timer = 0
+                                self.momentum_y *= -0.9
+                                self.grounded = True
 
                                 return "object"
 
         if(self.system.height - (self.rect.y + self.scale_y) < self.scale_y):
             
-            
-            self.momentum_y = 0
-            
+            self.timer = 0
+            self.momentum_y *= -0.9
+
             return "ground"
         
         return "empty"

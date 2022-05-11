@@ -13,7 +13,7 @@ class System():
         
         super().__init__()
         
-        self.fps = 60
+        self.fps = 144
         self.framerate = 0
         self.dt = 0
         self.sprites = pygame.sprite.Group()
@@ -21,7 +21,7 @@ class System():
         self.width = 600
         self.height = 600
 
-        self.window = pygame.display.set_mode((self.width, self.height))
+        self.window = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
 
         self.run = False
@@ -34,6 +34,9 @@ class System():
         self.run = True
     
     def update(self):
+
+        self.width = self.window.get_width()
+        self.height = self.window.get_height()
 
         self.framerate = int(self.clock.get_fps())
         pygame.display.set_caption(str(self.framerate))

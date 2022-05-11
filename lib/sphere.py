@@ -66,18 +66,22 @@ class Sphere(pygame.sprite.Sprite):
                             if(object.grounded == True):
                                 
                                 self.timer = 0
-                                self.momentum_y *= -0.9
+                                self.momentum_y *= -0.3
+                                self.momentum_y += 1
                                 self.grounded = True
-
+                                
                                 return "object"
 
-        if(self.system.height - (self.rect.y + self.scale_y) < self.scale_y):
+        if((self.system.height - (self.rect.y + self.system.scales.border)) < self.scale_y):
             
             self.timer = 0
-            self.momentum_y *= -0.9
+            self.momentum_y = 0
+            self.grounded = True
 
             return "ground"
         
+        self.grounded = False
+
         return "empty"
 
 if(__name__ == "__main__"):

@@ -59,7 +59,7 @@ class Sphere(pygame.sprite.Sprite):
             
             if(object != self):
                 
-                if(self.rect.colliderect(object.rect)):
+                """if(self.rect.colliderect(object.rect)):
                 
                     if(object.rect.y <= (self.rect.y + self.scale_y)):
                             
@@ -70,7 +70,8 @@ class Sphere(pygame.sprite.Sprite):
                                 self.momentum_y += 1
                                 self.grounded = True
                                 
-                                return "object"
+                                return "object"""
+                pass
 
         if((self.system.height - (self.rect.y + self.system.scales.border)) < (self.scale_y + self.system.scales.border)):
             
@@ -84,6 +85,16 @@ class Sphere(pygame.sprite.Sprite):
         self.grounded = False
 
         return "empty"
+
+    def check_distance(self, step):
+        
+        if((self.scale_y + step) > (self.system.height - (self.rect.y + self.system.scales.border))):
+
+            return (self.system.height - (self.rect.y + self.system.scales.border))
+
+        else:
+
+            return "enough distance"
 
 if(__name__ == "__main__"):
     

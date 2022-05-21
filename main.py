@@ -70,9 +70,10 @@ while(system.run == True):
     system.window.fill((255, 255, 255))
 
     system.sprites.draw(system.window)
-    system.sprites.update()
 
     system.physics.gravity(system.sprites)
+
+    system.sprites.update()
 
     for event in pygame.event.get():
         

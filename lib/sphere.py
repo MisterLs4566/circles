@@ -88,9 +88,9 @@ class Sphere(pygame.sprite.Sprite):
 
     def check_distance(self, step):
         
-        if((self.scale_y + step) > (self.system.height - (self.rect.y + self.system.scales.border))):
+        if(int(self.scale_y + step >= (self.rect.y + self.system.scales.border))):
 
-            return (self.system.height - (self.rect.y + self.system.scales.border))
+            return int(self.system.height - (self.rect.y + self.system.scales.border))
 
         else:
 

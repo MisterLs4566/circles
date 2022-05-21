@@ -26,8 +26,8 @@ class Physics():
                     object.momentum_y += (1/2 * self.g * pow(object.seconds, 2))             
 
                 else:
-
-                    object.momentum_y += distance
+                    
+                    object.momentum_y = distance
 
 if(__name__ == "__main__"):
    

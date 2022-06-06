@@ -27,7 +27,7 @@ class System():
         self.run = False
 
         self.scales = Scales()
-        self.physics = Physics()
+        self.physics = Physics(self)
 
     def main(self):
         

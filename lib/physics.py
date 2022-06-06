@@ -6,12 +6,12 @@ pygame.init()
 
 class Physics():
     
-    def __init__(self):
+    def __init__(self, system):
         
         super().__init__()
         
         self.g = 9.81
-
+        self.system = system
     
     def gravity(self, objects):
         
@@ -27,7 +27,8 @@ class Physics():
 
                 else:
                     
-                    object.momentum_y = distance
+                    object.momentum_y = 0
+                    object.rect.y = int(self.system.height - (object.rect.y + self.system.scales.border))
 
 if(__name__ == "__main__"):
    
